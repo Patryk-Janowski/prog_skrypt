@@ -17,8 +17,6 @@ def print_primes():
         if isprime(int(num)):
             print(num)
 
+
 if __name__ == "__main__":
     print_primes()
-    
-
-

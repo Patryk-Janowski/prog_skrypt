@@ -18,8 +18,6 @@ class Test_TestIncrementDecrement(unittest.TestCase):
     fr1_im1_sum = complex(1.6, 1)
 
     
-
-
     def test_sum_integer_integer(self):
         self.assertEqual(main.sum(2, 2), 4)
 
