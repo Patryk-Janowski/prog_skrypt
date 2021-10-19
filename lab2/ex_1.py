@@ -15,9 +15,7 @@ def print_prompt():
     course name can not contain spaces''')
 
 
-
 def add_user_or_course(course_list, params):
-
     if len(params) == 1:
         if params[0] in course_list.keys():
             print(f'- course {params[0]} already exist')
@@ -39,7 +37,6 @@ def add_user_or_course(course_list, params):
         
 
 def del_user_or_course(course_list, params):
-
     if len(params) == 1:
         try:
             del course_list[params[0]]
@@ -60,8 +57,8 @@ def del_user_or_course(course_list, params):
         else:
             print(f'- course: {params[0]} does not exist')
 
-def modify_name(course_list, params):
 
+def modify_name(course_list, params):
     if len(params) != 2:
         print('- enter old and new course name (course names can not contain spaces)')
     elif params[0] not in course_list.keys():
@@ -71,8 +68,8 @@ def modify_name(course_list, params):
         del course_list[params[0]]
         print(f'course {params[0]} changed to {params[1]}')
              
-def print_course(course_list, params):
 
+def print_course(course_list, params):
     if len(params) == 1 and (params[0] in course_list.keys() or params[0] == 'all'):
         if params[0] == 'all':
             value = list()
@@ -85,11 +82,8 @@ def print_course(course_list, params):
     
 
 def modify_courses(course_list):
-    
     print_prompt()
-
     while True:
-
         try:
             input_data = input('enter operation: ').split(' ')
             assert len(input_data) >= 2
@@ -112,12 +106,10 @@ def modify_courses(course_list):
             modify_name(course_list, params)
         else:
             print('- enter supported option')
-
     return course_list
 
 
 if __name__ == '__main__':
-
     try:
         len(sys.argv) == 2
         max_num = int(sys.argv[1])
