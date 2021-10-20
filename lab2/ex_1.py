@@ -82,30 +82,33 @@ def print_course(course_list, params):
     
 
 def modify_courses(course_list):
-    print_prompt()
     while True:
         try:
-            input_data = input('enter operation: ').split(' ')
-            assert len(input_data) >= 2
+            input_data = input('enter operation: ')
+            if not input_data:
+                break
+            else:
+                input_data = input_data.split(' ')
+                assert len(input_data) >= 2
         except EOFError:
             print('\n- exiting')
             break
         except Exception:
             print('- enter correct commands')
-        
-        option = input_data[0]
-        params = input_data[1:]
-
-        if option == 'a':
-            add_user_or_course(course_list, params)
-        elif option == 'd':
-            del_user_or_course(course_list, params)
-        elif option == 'p':
-            print_course(course_list, params)
-        elif option == 'm':
-            modify_name(course_list, params)
+            break
         else:
-            print('- enter supported option')
+            option = input_data[0]
+            params = input_data[1:]
+            if option == 'a':
+                add_user_or_course(course_list, params)
+            elif option == 'd':
+                del_user_or_course(course_list, params)
+            elif option == 'p':
+                print_course(course_list, params)
+            elif option == 'm':
+                modify_name(course_list, params)
+            else:
+                print('- enter supported option')
     return course_list
 
 
@@ -118,6 +121,7 @@ if __name__ == '__main__':
         max_num = 10
 
     course_list = {'max_num' : max_num}
+    print_prompt()
     modify_courses(course_list)
 
     
