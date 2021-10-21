@@ -34,7 +34,7 @@ def zapisz():
             print('podaj liczby')
             return
                 
-                
+
 def wypisz():
     print(f'Wywołano funkcję "{myself()}" modułu "{__name__}"')
 
@@ -53,5 +53,6 @@ def wypisz():
 
 print(f'Załadowano moduł "{__name__}"')
 
-zapisz()
-wypisz()
+if __name__ == '__main__':
+    zapisz()
+    wypisz()
