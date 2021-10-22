@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 #-*-coding: utf-8-*-
 
-str1 = 'patryk'
-str2 = 'janowski'
+str1 = 'programowanie\nskryptowe'
+str2 = 'python\n3'
 
 print((str1 + str2) * 3)
 
