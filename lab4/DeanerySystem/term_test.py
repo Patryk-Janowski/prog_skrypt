@@ -1,0 +1,46 @@
+import unittest
+from term import *
+from unittest import TestCase
+
+class Test_Term(TestCase):
+
+    term1 = Term(Day.TUE, 9, 45)
+    term2 = Term(Day.WED, 10, 15)
+
+    pp1 = Term(Day.MON, 21, 45)
+    pp2 = Term(Day.THU, 4, 20)
+
+    e1 = Term(Day.THU, 4, 20)
+
+
+    def test_print(self):
+        self.assertEqual(self.term1.__str__(), 'Wtorek 9:45 [90]')
+        self.assertEqual(self.term2.__str__(), 'Środa 10:15 [90]')
+        self.assertEqual(self.pp1.__str__(), 'Poniedziałek 21:45 [90]')
+        self.assertEqual(self.pp2.__str__(), 'Czwartek 4:20 [90]')
+        
+
+    def test_earlierThan(self):
+        self.assertEqual(self.term1.earlierThan(self.term2), True)
+        self.assertEqual(self.term2.earlierThan(self.term1), False)
+        self.assertEqual(self.pp1.earlierThan(self.pp2), True)
+        self.assertEqual(self.pp2.earlierThan(self.pp1), False)
+
+
+        
+
+    def test_laterThan(self):
+        self.assertEqual(self.term1.laterThan(self.term2), False)
+        self.assertEqual(self.term2.laterThan(self.term1), True)
+        self.assertEqual(self.pp1.laterThan(self.pp2), False)
+        self.assertEqual(self.pp2.laterThan(self.pp1), True)
+
+    def test_equals(self):
+        self.assertEqual(self.term1.equals(self.term2), False)
+        self.assertEqual(self.pp2.equals(self.e1), True)
+
+    
+if __name__ == '__main__':
+    unittest.main()
+
+    
