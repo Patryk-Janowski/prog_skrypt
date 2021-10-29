@@ -26,25 +26,16 @@ class Term:
         else:
             return False
 
+    @property
+    def min_from_start(self):
+        return self.get_day * 1440 + self.hour * 60 + self.minute
+
 
     def earlierThan(self, other):
-    
-        if self.__day.value < other.__day.value:
+        if self.min_from_start < other.min_from_start:
             return True
-        elif self.__day.value > other.__day.value:
+        else:
             return False
-        else:     
-            if self.hour < other.hour:
-                return True
-            elif self.hour > other.hour:
-                return False
-            else:
-                if self.minute < other.minute:
-                    return True
-                elif self.minute > other.minute:
-                    return False
-                else:
-                    return False
     
 
     def laterThan(self, other):
@@ -87,19 +78,21 @@ class Term:
         self.minute = int(minute)
         self.duration = min_from_mid - self.hour * 60 - self.minute
 
-x =  Term(Day.MON, 10, 10, 124)
 
-x.setTerm("Środa 00:69", 212)
+if __name__ == '__main__':
 
-term1 = Term(Day.TUE, 9, 45)
-term2 = Term(Day.WED, 10, 15)
+    x =  Term(Day.MON, 10, 10, 124) 
+    x.setTerm("Środa 00:69", 212)
 
-pp1 = Term(Day.MON, 21, 45)
-pp2 = Term(Day.THU, 4, 20)
+    term1 = Term(Day.TUE, 9, 45)
+    term2 = Term(Day.WED, 10, 15)
 
-e1 = Term(Day.THU, 4, 20)
+    pp1 = Term(Day.MON, 21, 45)
+    pp2 = Term(Day.THU, 4, 20)
 
-print(term1.endTime())
-print(term2.endTime())
-print(pp1.endTime())
-print(pp2.endTime())
+    e1 = Term(Day.THU, 4, 20)
+
+    print(term1.endTime())
+    print(term2.endTime())
+    print(pp1.endTime())
+    print(pp2.endTime())
