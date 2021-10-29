@@ -3,6 +3,17 @@
 from enum import Enum, auto
 
 
+day_to_name = dict()
+day_to_name[1] = 'Poniedziałek'
+day_to_name[2] = 'Wtorek'
+day_to_name[3] = 'Środa'
+day_to_name[4] = 'Czwartek'
+day_to_name[5] = 'Piątek'
+day_to_name[6] = 'Sobota'
+day_to_name[7] = 'Niedziela'
+
+name_to_day = {v: k for k, v in day_to_name.items()}
+
 class Day(Enum):
 
     MON = 1
@@ -12,6 +23,8 @@ class Day(Enum):
     FRI = 5
     SAT = 6
     SUN = 7
+
+
 
     def difference(self, day: Enum):
         diff = day.value - self.value
@@ -23,36 +36,10 @@ class Day(Enum):
             return diff
 
     def to_name(self):
-        if self.value == 1:
-            return 'Poniedziałek'
-        elif self.value == 2:
-            return 'Wtorek'
-        elif self.value == 3:
-            return 'Środa'
-        elif self.value == 4:
-            return 'Czwartek'
-        elif self.value == 5:
-            return 'Piątek'
-        elif self.value == 6:
-            return 'Sobota'
-        elif self.value == 7:
-            return 'Niedziela'
-    
+        global day_to_name
+        return day_to_name[self.value]
 
 def nthDayFrom(n, day: Day):
     new_day = (day.value + n - 1) % 7 + 1
-    if new_day == 1:
-        return Day.MON
-    elif new_day == 2:
-        return Day.TUE
-    elif new_day == 3:
-        return Day.WED
-    elif new_day == 4:
-        return Day.THU
-    elif new_day == 5:
-        return Day.THU
-    elif new_day == 6:
-        return Day.FRI
-    elif new_day == 7:
-        return Day.SUN
+    return Day(new_day)
 

@@ -39,8 +39,20 @@ class Test_Term(TestCase):
         self.assertEqual(self.term1.equals(self.term2), False)
         self.assertEqual(self.pp2.equals(self.e1), True)
 
+
+    def test_endTime(self):
+        self.assertEqual(self.term1.endTime().__str__(), 'Wtorek 11:15 [90]')
+        self.assertEqual(self.term2.endTime().__str__(), 'Środa 11:45 [90]')
+        self.assertEqual(self.pp1.endTime().__str__(), 'Poniedziałek 23:15 [90]')
+        self.assertEqual(self.pp2.endTime().__str__(), 'Czwartek 5:50 [90]')
+
+
+    def test_setTerm(self):
+        pass
+    
     
 if __name__ == '__main__':
     unittest.main()
+
 
     

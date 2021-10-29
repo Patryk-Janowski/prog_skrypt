@@ -28,3 +28,7 @@ class Klasa(object):
     @staticmethod
     def metodaStatyczna():
         print("Wywołano metodę 'metodaStatyczna()'")
+
+
+
+
