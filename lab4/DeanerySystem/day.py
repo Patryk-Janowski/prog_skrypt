@@ -24,8 +24,6 @@ class Day(Enum):
     SAT = 6
     SUN = 7
 
-
-
     def difference(self, day: Enum):
         diff = day.value - self.value
         if diff > 3:

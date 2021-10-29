@@ -12,6 +12,8 @@ class Test_Term(TestCase):
 
     e1 = Term(Day.THU, 4, 20)
 
+    s1 = Term(Day.THU, 4, 20)
+
 
     def test_print(self):
         self.assertEqual(self.term1.__str__(), 'Wtorek 9:45 [90]')
@@ -48,7 +50,16 @@ class Test_Term(TestCase):
 
 
     def test_setTerm(self):
-        pass
+        self.s1.setTerm("Środa 8:00", 510)
+        self.assertEqual(self.s1.__str__(), 'Środa 8:00 [30]')
+        self.assertEqual(self.s1.endTime().__str__(), 'Środa 8:30 [30]')
+
+        self.s1.setTerm("Środa 0:00", 1440)
+        self.assertEqual(self.s1.__str__(), 'Środa 0:00 [1440]')
+        self.assertEqual(self.s1.endTime().__str__(), 'Czwartek 0:00 [1440]')
+
+
+
     
     
 if __name__ == '__main__':

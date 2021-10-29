@@ -12,12 +12,19 @@ class Term:
             self.duration = duration
 
     def __str__(self) -> str:
-        return f'{self.__day.to_name()} {self.hour}:{self.minute} [{self.duration}]'
+        return f'{self.__day.to_name()} {self.hour}:{self.display_min} [{self.duration}]'
 
 
     @property
     def get_day(self):
         return self.__day.value
+
+    @property
+    def display_min(self):
+        if self.minute < 10:
+            return '0' + str(self.minute)
+        else:
+            return str(self.minute)
 
 
     def equals(self, other):
@@ -81,9 +88,6 @@ class Term:
 
 if __name__ == '__main__':
 
-    x =  Term(Day.MON, 10, 10, 124) 
-    x.setTerm("Środa 00:69", 212)
-
     term1 = Term(Day.TUE, 9, 45)
     term2 = Term(Day.WED, 10, 15)
 
@@ -92,7 +96,8 @@ if __name__ == '__main__':
 
     e1 = Term(Day.THU, 4, 20)
 
+    
+
+    term1.setTerm("Środa 8:00", 510)
     print(term1.endTime())
-    print(term2.endTime())
-    print(pp1.endTime())
-    print(pp2.endTime())
+   
