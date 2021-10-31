@@ -75,21 +75,20 @@ class Term:
             assert day in name_to_day.keys()
             hour, minute = int(hour), int(minute)
             assert hour <= 24 and minute <= 60
-            duration = min_from_mid - self.hour * 60 - self.minute
+            duration = min_from_mid - hour * 60 - minute
             assert duration >= 0
         except:
             print('Wrong data, can not update term')
-            return
-
-        self.__day = Day(name_to_day[day])
-        self.hour = int(hour)
-        self.minute = int(minute)
-        self.duration = duration
+        else:
+            self.__day = Day(name_to_day[day])
+            self.hour = hour
+            self.minute = minute
+            self.duration = duration
 
 
 if __name__ == '__main__':
 
-    term1 = Term(Day.TUE, 9, 45)
+    term1 = Term(Day.TUE, 9, 5)
     term2 = Term(Day.WED, 10, 15)
 
     pp1 = Term(Day.MON, 21, 45)
@@ -101,4 +100,4 @@ if __name__ == '__main__':
 
     term1.setTerm("Środa 8:00", 40)
     print(term1.endTime())
-    
+    print(term1)
