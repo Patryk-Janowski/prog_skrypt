@@ -71,11 +71,12 @@ class Term:
         day = re.findall(r'^\w+\b', description)[0]
         hour, minute = re.findall(r'\b\d{1,2}', description)
 
-        assert day in name_to_day.keys()
-
         try:
+            assert day in name_to_day.keys()
             hour, minute = int(hour), int(minute)
             assert hour <= 24 and minute <= 60
+            duration = min_from_mid - self.hour * 60 - self.minute
+            assert duration >= 0
         except:
             print('Wrong data, can not update term')
             return
@@ -83,7 +84,7 @@ class Term:
         self.__day = Day(name_to_day[day])
         self.hour = int(hour)
         self.minute = int(minute)
-        self.duration = min_from_mid - self.hour * 60 - self.minute
+        self.duration = duration
 
 
 if __name__ == '__main__':
@@ -98,6 +99,6 @@ if __name__ == '__main__':
 
     
 
-    term1.setTerm("Środa 8:00", 510)
+    term1.setTerm("Środa 8:00", 40)
     print(term1.endTime())
-   
+    
