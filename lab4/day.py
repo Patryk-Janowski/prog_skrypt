@@ -3,6 +3,17 @@
 from enum import Enum, auto
 
 
+day_to_name = dict()
+day_to_name[1] = 'Poniedziałek'
+day_to_name[2] = 'Wtorek'
+day_to_name[3] = 'Środa'
+day_to_name[4] = 'Czwartek'
+day_to_name[5] = 'Piątek'
+day_to_name[6] = 'Sobota'
+day_to_name[7] = 'Niedziela'
+
+name_to_day = {v: k for k, v in day_to_name.items()}
+
 class Day(Enum):
 
     MON = 1
@@ -21,13 +32,11 @@ class Day(Enum):
             return 7 + diff
         else:
             return diff
-    
 
+    def to_name(self):
+        global day_to_name
+        return day_to_name[self.value]
 
 def nthDayFrom(n, day: Day):
     new_day = (day.value + n - 1) % 7 + 1
     return Day(new_day)
-
-x = Day.MON
-
-print(type(x))
