@@ -26,6 +26,13 @@ class Lesson:
 
     FRIDAY_MIDNIGHT = Term(24, 00, day=Day.FRI)
 
+    years = dict()
+    years[1] = "Pierszy rok studiów"
+    years[2] = "Drugi rok studiów"
+    years[3] = "Trzeci rok studiów"
+    years[4] = "Czwarty rok studiów"
+    years[5] = "Piąty rok studiów"
+    
     def __init__(self, term: Term, name: str, teacher_name: str, year: int):
         self.term = term
         self.name = name
@@ -34,14 +41,31 @@ class Lesson:
 
         self.full_time = self.term.is_full_time()
         self.part_time = self.term.is_part_time()
+
+        if not self.full_time and not self.part_time:
+            raise ValueError('Lesson not in acceptable time')
     
+
+    def __str__(self) -> str:
+        if self.full_time:
+            full_or_part = "stacjonarnych"
+        else:
+            full_or_part = "niestacjonarnych"
+
+        return f'''{self.name}, ({self.term.display_day} {self.term.display_start_end})
+{Lesson.years[self.year]} {full_or_part}
+Prowadzący {self.teacher_name}
+'''
 
 
     def move_term(self, min):
-        new_term = self.term.min_to_instance(self.term.min_from_start + min, self.term.duration)
+        new_term = self.term.min_to_instance(self.term.min_from_start + min, duration=self.term.duration)
+
         if self.full_time and new_term.is_full_time():
+            self.term = new_term
             return True
         elif self.part_time and new_term.is_part_time():
+            self.term = new_term
             return True
         else:
             return False
@@ -55,13 +79,13 @@ class Lesson:
     def later_term(self):
         return self.move_term(self.term.duration)
 
-    def later_term(self):
+    def earlier_term(self):
         return self.move_term(-self.term.duration)
 
-lesson = Lesson(Term(9, 35, day=Day.TUE), "Programowanie skryptowe", "Stanisław Polak", 2)
-print(lesson.part_time)
-print(lesson.earlier_day())
-print(lesson.term)
+lesson = Lesson(Term(17, 35, day=Day.FRI), "Programowanie skryptowe", "Stanisław Polak", 2)
+
+print(lesson)
+
 
         
 

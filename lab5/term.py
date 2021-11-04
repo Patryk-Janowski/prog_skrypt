@@ -6,7 +6,7 @@ import re
 
 class Term:
 
-    min_in_week = 11520
+    min_in_week = 10080
     min_in_day = 1440
 
     def __init__(self, hour, minute, duration=90, day=Day.NOT_SPECYFIED):
@@ -33,6 +33,11 @@ class Term:
         else:
             return str(self.minute)
 
+    @property
+    def display_start_end(self):
+        end = self.endTime()
+        return f'{self.hour}:{self.display_min} - {end.hour}:{end.display_min}'
+
 
     @property
     def min_from_start(self):
@@ -41,24 +46,25 @@ class Term:
 
     def min_to_instance(self, sum_min: int, duration=90, day_falg=False):
         if sum_min < 0:
-            sum_min = (self.min_in_week - (self.min_in_week % abs(sum_min)))
+            sum_min = self.min_in_week - (abs(sum_min) % self.min_in_week)
         day = sum_min // Term.min_in_day
         sum_min -= day * Term.min_in_day
         hour = sum_min // 60
         sum_min -= hour * 60
         min = sum_min % 60
-        day = day % 6 + 1
+        day = (day - 1) % 7 + 1
         if day_falg:
-            return(Term(hour, min))
+            return(Term(hour, min, duration=duration))
         else:
-            return Term(hour, min, day=Day(day))
+            return Term(hour, min, duration=duration, day=Day(day))
 
-    @property
+
     def endTime(self):
         sum_min = self.min_from_start + self.duration
         if self.__day.value == Day.NOT_SPECYFIED.value:
-            return self.min_to_instance(sum_min, day_flag=True)
-        return self.min_to_instance(sum_min)
+            return self.min_to_instance(sum_min, duration=self.duration, day_flag=True)
+        else:
+            return self.min_to_instance(sum_min, duration=self.duration)
 
     
     @property
@@ -88,12 +94,12 @@ class Term:
         if self.__day == Day.NOT_SPECYFIED:
             raise ValueError('Day not specyfied')
         if Day.MON.value <= self.__day.value <= Day.THU.value:
-            if Term(8, 0, day=self.__day) <= self and self.endTime <= Term(20, 0, day=self.__day):
+            if Term(8, 0, day=self.__day) <= self and self.endTime() <= Term(20, 0, day=self.__day):
                 return True
             else:
                 return False
         elif self.__day.value == Day.FRI.value:
-            if Term(8, 0, day=self.__day) <= self and self.endTime <= Term(17, 0, day=self.__day):
+            if Term(8, 0, day=self.__day) <= self and self.endTime() <= Term(17, 0, day=self.__day):
                 return True
             else:
                 return False
@@ -105,12 +111,12 @@ class Term:
         if self.__day == Day.NOT_SPECYFIED:
             raise ValueError('Day not specyfied')
         elif Day.SAT.value <= self.__day.value <= Day.SUN.value:
-            if Term(8, 0, day=self.__day) <= self and self.endTime <= Term(20, 0, day=self.__day):
+            if Term(8, 0, day=self.__day) <= self and self.endTime() <= Term(20, 0, day=self.__day):
                 return True
             else:
                 return False
         elif self.__day.value == Day.FRI.value:
-            if Term(17, 0, day=self.__day) <= self and self.endTime <= Term(20, 0, day=self.__day):
+            if Term(17, 0, day=self.__day) <= self and self.endTime() <= Term(20, 0, day=self.__day):
                 return True
             else:
                 return False
@@ -124,7 +130,7 @@ class Term:
 
 
     def __sub__(self, other): 
-        duration = self.endTime.min_from_start - other.min_from_start
+        duration = self.endTime().min_from_start - other.min_from_start
         return Term(other.hour, other.minute, duration, self.__day)
 
 
@@ -171,4 +177,6 @@ def main():
 if __name__ == '__main__':
     t1 = Term(8, 10, 30, Day.TUE)
     t2 = Term(8, 10, 30, Day.FRI)
-    print(t1.is_full_time())
+    x = Term(17, 0, day=t1.get_day)
+    y = t1.endTime()
+    print(x.min_to_instance(-Term.min_in_week))
