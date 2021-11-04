@@ -40,7 +40,7 @@ class Day(Enum):
         global day_to_name
         return day_to_name[self.value]
 
-def nthDayFrom(n, day: Day):
-    new_day = (day.value + n - 1) % 7 + 1
-    return Day(new_day)
+    def nthDayFrom(self, n):
+        new_day = (self.value + n - 1) % 7 + 1
+        return Day(new_day)
 

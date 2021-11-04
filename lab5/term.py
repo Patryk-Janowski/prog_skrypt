@@ -1,5 +1,5 @@
 from enum import Enum
-from day import Day, nthDayFrom, day_to_name, name_to_day
+from day import Day, day_to_name, name_to_day
 import re
 
 
@@ -7,6 +7,7 @@ import re
 class Term:
 
     min_in_week = 11520
+    min_in_day = 1440
 
     def __init__(self, hour, minute, duration=90, day=Day.NOT_SPECYFIED):
         assert hour <= 24 and minute <= 60 and day.value in range(8)
@@ -35,14 +36,14 @@ class Term:
 
     @property
     def min_from_start(self):
-        return self.__day.value * 1440 + self.hour * 60 + self.minute
+        return self.__day.value * Term.min_in_day + self.hour * 60 + self.minute
 
 
-    def min_to_instance(self, sum_min: int, day_falg=False):
+    def min_to_instance(self, sum_min: int, duration=90, day_falg=False):
         if sum_min < 0:
             sum_min = (self.min_in_week - (self.min_in_week % abs(sum_min)))
-        day = sum_min // 1440
-        sum_min -= day * 1440
+        day = sum_min // Term.min_in_day
+        sum_min -= day * Term.min_in_day
         hour = sum_min // 60
         sum_min -= hour * 60
         min = sum_min % 60
@@ -56,7 +57,7 @@ class Term:
     def endTime(self):
         sum_min = self.min_from_start + self.duration
         if self.__day.value == Day.NOT_SPECYFIED.value:
-            return self.min_to_instance(sum_min, True)
+            return self.min_to_instance(sum_min, day_flag=True)
         return self.min_to_instance(sum_min)
 
     
@@ -100,7 +101,7 @@ class Term:
             return False
 
 
-    def is_part_full_time(self):
+    def is_part_time(self):
         if self.__day == Day.NOT_SPECYFIED:
             raise ValueError('Day not specyfied')
         elif Day.SAT.value <= self.__day.value <= Day.SUN.value:
@@ -168,4 +169,6 @@ def main():
 
 
 if __name__ == '__main__':
-    pass
+    t1 = Term(8, 10, 30, Day.TUE)
+    t2 = Term(8, 10, 30, Day.FRI)
+    print(t1.is_full_time())

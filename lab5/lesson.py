@@ -32,12 +32,37 @@ class Lesson:
         self.teacher_name = teacher_name
         self.year = year
 
-        if self.term >  self.__class__.FRIDAY_MIDNIGHT:
-            self.full_time = False
-        else:
-            self.full_time = True
+        self.full_time = self.term.is_full_time()
+        self.part_time = self.term.is_part_time()
+    
 
-    def is_fult_time(self):
-        i
+
+    def move_term(self, min):
+        new_term = self.term.min_to_instance(self.term.min_from_start + min, self.term.duration)
+        if self.full_time and new_term.is_full_time():
+            return True
+        elif self.part_time and new_term.is_part_time():
+            return True
+        else:
+            return False
+
+    def earlier_day(self):
+        return self.move_term(-Term.min_in_day)
+
+    def later_day(self):
+        return self.move_term(Term.min_in_day)
+    
+    def later_term(self):
+        return self.move_term(self.term.duration)
+
+    def later_term(self):
+        return self.move_term(-self.term.duration)
+
+lesson = Lesson(Term(9, 35, day=Day.TUE), "Programowanie skryptowe", "Stanisław Polak", 2)
+print(lesson.part_time)
+print(lesson.earlier_day())
+print(lesson.term)
+
+        
 
 
