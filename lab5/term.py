@@ -151,7 +151,8 @@ class Term:
 
 
     def __eq__(self, other):
-        return self.min_from_start == other.min_from_start
+        return self.__day.value == other.__day.value and self.min_from_start == other.min_from_start
+        ... and self.duration == other.duration
         
         
 def main():

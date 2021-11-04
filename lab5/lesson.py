@@ -82,11 +82,30 @@ Prowadzący {self.teacher_name}
     def earlier_term(self):
         return self.move_term(-self.term.duration)
 
-lesson = Lesson(Term(17, 35, day=Day.FRI), "Programowanie skryptowe", "Stanisław Polak", 2)
 
-print(lesson)
+if __name__ == '__main__':
+    l1 = Lesson(Term(15, 00, day=Day.WED), "", "", 2)
+    l2 = Lesson(Term(17, 00, day=Day.SAT), "", "", 2)
+
+    l1.later_term()
+    l1.later_term()
 
 
+
+
+    print(l1)
+
+    # print(l1)
+    
+    
+    l2.earlier_term()
+    l2.earlier_term()
+    l2.earlier_term()
+    l2.earlier_term()
+    l2.earlier_term()
+    l2.earlier_term()
+    l2.earlier_term()
+    print(l2)
         
 
 
