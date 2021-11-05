@@ -12,9 +12,39 @@ class Term:
     def __init__(self, hour, minute, duration=90, day=Day.NOT_SPECYFIED):
         assert hour <= 24 and minute <= 60 and day.value in range(8)
         self.__day = day
-        self.hour = hour
-        self.minute = minute
-        self.duration = duration
+        self.__hour = hour
+        self.__minute = minute
+        self.__duration = duration
+
+
+    @property
+    def hour(self):
+        return self.__hour
+
+    @hour.setter
+    def day(self, day):
+        self.__day = day
+
+    @property
+    def minute(self):
+        return self.__minute
+
+    @minute.setter
+    def minute(self, minute):
+        self.__minute = minute
+
+    @property
+    def duration(self):
+        return self.__duration
+
+    @duration.setter
+    def day(self, duration):
+        self.__day = duration
+
+
+    @property
+    def display_day(self):
+        return self.__day.to_name
 
 
     def __str__(self) -> str:

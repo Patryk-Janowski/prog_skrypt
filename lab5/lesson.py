@@ -34,17 +34,56 @@ class Lesson:
     years[5] = "Piąty rok studiów"
     
     def __init__(self, term: Term, name: str, teacher_name: str, year: int):
-        self.term = term
-        self.name = name
-        self.teacher_name = teacher_name
-        self.year = year
+        self.__term = term
+        self.__name = name
+        self.__teacher_name = teacher_name
+        self.__year = year
 
-        self.full_time = self.term.is_full_time()
-        self.part_time = self.term.is_part_time()
+        self.__full_time = self.term.is_full_time()
+        self.__part_time = self.term.is_part_time()
 
         if not self.full_time and not self.part_time:
             raise ValueError('Lesson not in acceptable time')
-    
+
+    @property
+    def term(self):
+        return self.__term
+
+    @term.setter
+    def term(self, term):
+        self.__term = term
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def day(self, name):
+        self.__name = name
+
+    @property
+    def teacher_name(self):
+        return self.__teacher_name
+
+    @teacher_name.setter
+    def day(self, teacher_name):
+        self.__teacher_name = teacher_name
+
+    @property
+    def year(self):
+        return self.__year
+
+    @year.setter
+    def year(self, year):
+        self.__year = year
+
+    @property
+    def part_time(self):
+        return self.__part_time
+
+    @property
+    def full_time(self):
+        return self.__full_time
 
     def __str__(self) -> str:
         if self.full_time:
@@ -87,25 +126,5 @@ if __name__ == '__main__':
     l1 = Lesson(Term(15, 00, day=Day.WED), "", "", 2)
     l2 = Lesson(Term(17, 00, day=Day.SAT), "", "", 2)
 
-    l1.later_term()
-    l1.later_term()
-
-
-
-
-    print(l1)
-
-    # print(l1)
-    
-    
-    l2.earlier_term()
-    l2.earlier_term()
-    l2.earlier_term()
-    l2.earlier_term()
-    l2.earlier_term()
-    l2.earlier_term()
-    l2.earlier_term()
-    print(l2)
-        
 
 
