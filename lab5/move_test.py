@@ -14,7 +14,7 @@ class TestLessonMove(TestCase):
         self.l2 = Lesson(Term(17, 00, day=Day.SAT), "", "", 2)
 
     
-    def test_later_term(self):
+    def test_later_day(self):
         for _ in range(2):
             self.assertEqual(self.l1.later_day(), True)
         self.assertEqual(self.l1.later_day(), False)
@@ -25,7 +25,7 @@ class TestLessonMove(TestCase):
         self.assertEqual(self.l2.term == Term(17, 00, day=Day.SUN), True)
 
 
-    def test_earlier_term(self):
+    def test_earlier_day(self):
         for _ in range(2):
             self.assertEqual(self.l1.earlier_day(), True)
         self.assertEqual(self.l1.earlier_day(), False)
