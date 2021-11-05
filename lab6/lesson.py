@@ -20,7 +20,10 @@
 #                   Prowadzący: Stanisław Polak
 #                 """
 
+from re import S
+from student import Student
 from term import *
+from teacher import Teacher
 
 class Lesson:
 
@@ -33,17 +36,26 @@ class Lesson:
     years[4] = "Czwarty rok studiów"
     years[5] = "Piąty rok studiów"
     
-    def __init__(self, term: Term, name: str, teacher_name: str, year: int):
+    def __init__(self, term: Term, name: str, teacher: Teacher, year: int):
         self.__term = term
         self.__name = name
-        self.__teacher_name = teacher_name
+        self.__teacher_name = f'{teacher.first_name} {teacher.second_name}'
         self.__year = year
+        self.__teacher = teacher
 
         self.__full_time = self.term.is_full_time()
         self.__part_time = self.term.is_part_time()
 
         if not self.full_time and not self.part_time:
             raise ValueError('Lesson not in acceptable time')
+
+    @property
+    def teacher(self):
+        return self.__teacher
+
+    @teacher.setter
+    def teacher(self, teacher):
+        self.__teacher = teacher
 
     @property
     def term(self):
@@ -93,7 +105,7 @@ class Lesson:
 
         return f'''{self.name}, ({self.term.display_day} {self.term.display_start_end})
 {Lesson.years[self.year]} {full_or_part}
-Prowadzący {self.teacher_name}
+{self.teacher.__str__()}
 '''
 
 
@@ -123,8 +135,11 @@ Prowadzący {self.teacher_name}
 
 
 if __name__ == '__main__':
-    l1 = Lesson(Term(15, 00, day=Day.WED), "", "", 2)
-    l2 = Lesson(Term(17, 00, day=Day.SAT), "", "", 2)
+    t = Teacher('Stanislaw', 'Polak')
+    t.add_student(Student('a', 'b'))
+    t.add_student(Student('c', 'd'))
+    l1 = Lesson(Term(15, 00, day=Day.WED), "pp", t, 2)
+    print(l1)
 
 
 
