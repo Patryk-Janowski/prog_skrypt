@@ -31,7 +31,7 @@ class Timetable:
     def busy(self, term: Term) -> bool:
         start_time = term.min_from_start
         end_time = term.endTime().min_from_start
-        for t in self.__class__.busy_set:
+        for t in Timetable.busy_set:
             if start_time in t or end_time in t:
                 return True
         return False
@@ -41,22 +41,22 @@ class Timetable:
         if self.busy(lesson.term):
             return False
         else:
-            self.__class__.lesson_list.append(lesson)
-            self.__class__.busy_set.append(range(lesson.term.min_from_start, lesson.term.endTime().min_from_start))
+            Timetable.lesson_list.append(lesson)
+            Timetable.busy_set.append(range(lesson.term.min_from_start, lesson.term.endTime().min_from_start))
             return True
 
 
     def parse(self, actions: List[str]) -> List[Action]:
         r_list = list()
         for e in actions:
-            if e in self.__class__.action_set.keys():
-                r_list.append(self.__class__.action_set[e])
+            if e in Timetable.action_set.keys():
+                r_list.append(Timetable.action_set[e])
         return r_list
 
 
     def perform(self, actions: List[Action]):
-        assert len(actions) <= len(self.__class__.lesson_list)
-        for l, a in zip(self.__class__.lesson_list, actions):
+        assert len(actions) <= len(Timetable.lesson_list)
+        for l, a in zip(Timetable.lesson_list, actions):
             if a == Action.DAY_EARLIER:
                 l.earlier_day()
             elif a == Action.DAY_LATER:
@@ -68,7 +68,7 @@ class Timetable:
 
 
     def get(self, term: Term) -> Lesson:
-        for l in self.__class__.lesson_list:
+        for l in Timetable.lesson_list:
             if term == l.term:
                 return l
         return None
@@ -76,7 +76,13 @@ class Timetable:
 if __name__ == '__main__':
     l1 = Lesson(Term(15, 00, day=Day.WED), "", "", 2)
     l2 = Lesson(Term(17, 00, day=Day.SAT), "", "", 2)
+    l3 = Lesson(Term(18, 00, day=Day.SUN), "", "", 2)
+    l4 = Lesson(Term(18, 30, day=Day.SUN), "", "", 2)
     table = Timetable()
-  
-
+    print(table.put(l3))
+    print(table.busy_set)
+    print(table.put(l4))
+    print(table.busy_set)
+    print(table.put(l3))
+    
 
