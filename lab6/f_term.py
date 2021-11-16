@@ -1,5 +1,5 @@
 from enum import Enum
-from day import Day, day_to_name, name_to_day
+from f_day import Day, day_to_name, name_to_day
 import re
 
 

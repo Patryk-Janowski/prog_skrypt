@@ -20,10 +20,10 @@
 #                   Prowadzący: Stanisław Polak
 #                 """
 
-from re import S
-from student import Student
-from term import *
-from teacher import Teacher
+from f_term import *
+from f_student import Student
+import f_teacher
+
 
 class Lesson:
 
@@ -36,12 +36,21 @@ class Lesson:
     years[4] = "Czwarty rok studiów"
     years[5] = "Piąty rok studiów"
     
-    def __init__(self, term: Term, name: str, teacher: Teacher, year: int):
+    def __init__(self, term: Term, name: str, teacher_name :str, year: int, teacher, student_list=set(Student)):
+
+        if student_list:
+            for student in student_list:
+                teacher.add_student(student)
+
+        student_list.add(teacher.student_list)
+
         self.__term = term
         self.__name = name
         self.__teacher_name = f'{teacher.first_name} {teacher.second_name}'
         self.__year = year
         self.__teacher = teacher
+        self.__student_list = student_list
+
 
         self.__full_time = self.term.is_full_time()
         self.__part_time = self.term.is_part_time()
@@ -97,6 +106,7 @@ class Lesson:
     def full_time(self):
         return self.__full_time
 
+
     def __str__(self) -> str:
         if self.full_time:
             full_or_part = "stacjonarnych"
@@ -134,11 +144,13 @@ class Lesson:
         return self.move_term(-self.term.duration)
 
 
+
+
 if __name__ == '__main__':
-    t = Teacher('Stanislaw', 'Polak')
-    t.add_student(Student('a', 'b'))
-    t.add_student(Student('c', 'd'))
-    l1 = Lesson(Term(15, 00, day=Day.WED), "pp", t, 2)
+    l1 = Lesson(Term(15, 00, day=Day.WED), "pp", 2)
+    l1.teacher = f_teacher.Teacher('Stanislaw', 'Polak')
+    l1.add_student(Student('a', 'b'))
+    l1.add_student(Student('c', 'd'))
     print(l1)
 
 
