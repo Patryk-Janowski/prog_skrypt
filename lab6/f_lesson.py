@@ -22,7 +22,7 @@
 
 from f_term import *
 from f_student import Student
-import f_teacher
+from f_teacher import Teacher
 
 
 class Lesson:
@@ -36,24 +36,20 @@ class Lesson:
     years[4] = "Czwarty rok studiów"
     years[5] = "Piąty rok studiów"
     
-    def __init__(self, term: Term, name: str, teacher_name :str, year: int, teacher, student_list=set(Student)):
+    def __init__(self, term: Term, name: str, year: int, teacher: Teacher, student_list=set()):
 
-        if student_list:
-            for student in student_list:
-                teacher.add_student(student)
-
-        student_list.add(teacher.student_list)
 
         self.__term = term
         self.__name = name
-        self.__teacher_name = f'{teacher.first_name} {teacher.second_name}'
         self.__year = year
         self.__teacher = teacher
-        self.__student_list = student_list
-
+        self.__teacher_name = teacher.first_name
 
         self.__full_time = self.term.is_full_time()
         self.__part_time = self.term.is_part_time()
+
+        for student in student_list:
+            self.teacher.add_student(self.name, student)
 
         if not self.full_time and not self.part_time:
             raise ValueError('Lesson not in acceptable time')
@@ -86,10 +82,6 @@ class Lesson:
     def teacher_name(self):
         return self.__teacher_name
 
-    @teacher_name.setter
-    def day(self, teacher_name):
-        self.__teacher_name = teacher_name
-
     @property
     def year(self):
         return self.__year
@@ -115,7 +107,7 @@ class Lesson:
 
         return f'''{self.name}, ({self.term.display_day} {self.term.display_start_end})
 {Lesson.years[self.year]} {full_or_part}
-{self.teacher.__str__()}
+{self.teacher.print_lessons(self.name)}
 '''
 
 
@@ -147,11 +139,18 @@ class Lesson:
 
 
 if __name__ == '__main__':
-    l1 = Lesson(Term(15, 00, day=Day.WED), "pp", 2)
-    l1.teacher = f_teacher.Teacher('Stanislaw', 'Polak')
-    l1.add_student(Student('a', 'b'))
-    l1.add_student(Student('c', 'd'))
-    print(l1)
+
+    t1 = Teacher("Stanislaw", "Polak")
+    students = list()
+    l1 = Lesson(Term(15, 00, day=Day.WED), "pp", 2, t1)
+    l2 = Lesson(Term(15, 00, day=Day.SAT), "programowanie skryptowe", 3, t1)
+  
+    for x in range(13):
+        students.append(Student('Student ', str(x)))
+
+    for x in range(6):
+        t1.add_student(l2.name, students[x])
+    print(t1.print_all_lessons())
 
 
-
+    print(l2)
