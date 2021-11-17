@@ -115,10 +115,12 @@ class Timetable:
             str_min_start = '0' + str(same_hour_tab[0].term.minute) if same_hour_tab[0].term.minute < 10 else str(same_hour_tab[0].term.minute)
             string += str(same_hour_tab[0].term.hour) + ":" + str_min_start + "-" + str(hours) + ":" + str_min_end + "\t*"
 
+            print(same_hour_tab)
             for day in range(1, 8):
                 lesson_placed = False
                 for element in same_hour_tab:
                     if element.term.day == Day(day):
+                        print('element name:', element.name)
                         if len(element.name) < 7:
                             string += element.name + "\t\t\t*"
                         else:
@@ -134,7 +136,7 @@ class Timetable:
 if __name__ == '__main__':
 
     t1 = Teacher("Stanislaw", "Polak")
-    l1 = Lesson(Term(15, 00, day=Day.WED),"pp", 2, t1)
+    l1 = Lesson(Term(15, 00, day=Day.WED),"podstawy programowania", 2, t1)
     l2 = Lesson(Term(17, 00, day=Day.SAT),"aa", 2, t1)
     l3 = Lesson(Term(18, 00, day=Day.SUN),"bb", 2, t1)
     l4 = Lesson(Term(18, 30, day=Day.THU),"cc", 2, t1)

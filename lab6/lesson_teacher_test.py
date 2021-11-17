@@ -29,9 +29,6 @@ class TestLessonAndTeacher(TestCase):
         self.assertEqual(len(self.t1.lessons[self.l1.name]), 0)
 
     
-
-
-
         
 if __name__ == '__main__':
     unittest.main()

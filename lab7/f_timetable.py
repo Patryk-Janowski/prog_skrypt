@@ -1,12 +1,11 @@
 from f_term import *
 from f_lesson import *
 from typing import List
-from action import *
+from f_action import Action
 
 class Timetable:
 
-    lesson_list = list()
-    busy_set = list()
+    
     action_set = dict()
     action_set['d+'] = Action.DAY_LATER
     action_set['d-'] = Action.DAY_EARLIER
@@ -14,7 +13,8 @@ class Timetable:
     action_set['t-'] = Action.TIME_EARLIER
 
     def __init__(self) -> None:
-        pass
+        self.lesson_list = list()
+        self.busy_set = list()
 
 
     def can_be_transferred_to(self, term: Term, full_time: bool) -> bool:
@@ -31,7 +31,7 @@ class Timetable:
     def busy(self, term: Term) -> bool:
         start_time = term.min_from_start
         end_time = term.endTime().min_from_start
-        for t in Timetable.busy_set:
+        for t in self.busy_set:
             if start_time in t or end_time in t:
                 return True
         return False
@@ -41,8 +41,8 @@ class Timetable:
         if self.busy(lesson.term):
             return False
         else:
-            Timetable.lesson_list.append(lesson)
-            Timetable.busy_set.append(range(lesson.term.min_from_start, lesson.term.endTime().min_from_start))
+            self.lesson_list.append(lesson)
+            self.busy_set.append(range(lesson.term.min_from_start, lesson.term.endTime().min_from_start))
             return True
 
 
@@ -55,8 +55,8 @@ class Timetable:
 
 
     def perform(self, actions: List[Action]):
-        assert len(actions) <= len(Timetable.lesson_list)
-        for l, a in zip(Timetable.lesson_list, actions):
+        assert len(actions) <= len(self.lesson_list)
+        for l, a in zip(self.lesson_list, actions):
             if a == Action.DAY_EARLIER:
                 l.earlier_day()
             elif a == Action.DAY_LATER:
@@ -68,7 +68,7 @@ class Timetable:
 
 
     def get(self, term: Term) -> Lesson:
-        for l in Timetable.lesson_list:
+        for l in self.lesson_list:
             if term == l.term:
                 return l
         return None
