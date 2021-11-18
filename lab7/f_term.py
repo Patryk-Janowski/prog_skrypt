@@ -9,12 +9,13 @@ class Term:
     min_in_week = 10080
     min_in_day = 1440
 
-    def __init__(self, hour, minute, duration=90, day=Day.NOT_SPECYFIED):
+    def __init__(self, hour, minute, duration=90, day=Day.NOT_SPECYFIED, bre=False):
         assert hour <= 24 and minute <= 60 and day.value in range(8)
         self.__day = day
         self.__hour = hour
         self.__minute = minute
         self.__duration = duration
+        self.bre = bre
 
 
     @property

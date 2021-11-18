@@ -73,6 +73,7 @@ class Timetable:
                 return l
         return None
 
+
     def __str__(self):
 
         stars = "*" * 167 + "\n"

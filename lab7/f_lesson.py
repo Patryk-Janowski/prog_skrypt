@@ -28,7 +28,7 @@ from f_teacher import Teacher
 class Lesson:
 
     FRIDAY_MIDNIGHT = Term(24, 00, day=Day.FRI)
-
+    skip_break = False
     years = dict()
     years[1] = "Pierszy rok studiów"
     years[2] = "Drugi rok studiów"
@@ -36,7 +36,7 @@ class Lesson:
     years[4] = "Czwarty rok studiów"
     years[5] = "Piąty rok studiów"
     
-    def __init__(self, term: Term, name: str, year: int, teacher: Teacher, student_list=set()):
+    def __init__(self, term: Term, name: str, year: int, teacher=None, student_list=set()):
 
 
         self.__term = term
@@ -106,10 +106,7 @@ class Lesson:
         else:
             full_or_part = "niestacjonarnych"
 
-        return f'''{self.name}, ({self.term.display_day} {self.term.display_start_end})
-{Lesson.years[self.year]} {full_or_part}
-{self.teacher.print_lessons(self.name)}
-'''
+        return f'''{self.name}, ({self.term.display_day} {self.term.display_start_end})'''
 
 
     def move_term(self, min):

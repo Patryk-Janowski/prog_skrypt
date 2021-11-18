@@ -1,4 +1,4 @@
-import f_student
+
 from f_student import Student
 
 class Teacher:
