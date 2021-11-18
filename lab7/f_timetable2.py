@@ -14,7 +14,7 @@ class Timetable2:
     action_set['d-'] = Action.DAY_EARLIER
     action_set['t+'] = Action.TIME_LATER
     action_set['t-'] = Action.TIME_EARLIER
-    skip_break = True
+    skip_break = False
 
     def __init__(self, breaks: List[Break]) -> None:
         self.lesson_list = list()
@@ -39,16 +39,16 @@ class Timetable2:
 
 
     def busy_lesson(self, term: Term) -> bool:
-        start_time = term.min_from_start
-        end_time = term.endTime().min_from_start
+        start_time = term.min_from_start + 1
+        end_time = term.endTime().min_from_start - 1
         for t in self.lesson_set:
             if start_time in t or end_time in t:
                 return True
         return False
 
     def busy_break(self, term: Term) -> bool:
-        start_time = term.min_from_start
-        end_time = term.endTime().min_from_start 
+        start_time = term.min_from_start + 1
+        end_time = term.endTime().min_from_start - 1
         for t in self.break_set:
             if start_time in t or end_time in t:
                 return True
@@ -101,10 +101,10 @@ class Timetable2:
 
 
     def later_day(self, lesson: Lesson):
-        self.move(lesson, 'ld') 
+        lesson.later_day()
 
     def earlier_day(self, lesson: Lesson):
-        self.move(lesson, 'ed')  
+        lesson.earlier_day() 
 
     def later_term(self, lesson):
         self.move(lesson, 'lt')  
@@ -119,21 +119,21 @@ class Timetable2:
         if func == 'lt':
             new_lesson.later_term()
         elif func == 'et':
+            print('et')
             new_lesson.earlier_term()
-        elif func == 'ld':
-            new_lesson.later_day()
-        elif func == 'ed':
-            new_lesson.earlier_day()
         if not self.busy_break(new_lesson.term) and not self.busy_lesson(new_lesson.term):
             print('not busy')
             lesson.term = new_lesson.term
         elif self.skip_break and self.busy_break(new_lesson.term):
             ra_break = self.get_range_break(new_lesson.term)
-            new_lesson.term = new_lesson.term.min_to_instance(ra_break[-1] + 1, new_lesson.term.duration)
+            if func == 'et':
+                new_lesson.term = new_lesson.term.min_to_instance(ra_break[0] - new_lesson.term.duration, new_lesson.term.duration)
+            elif func == 'lt':
+                new_lesson.term = new_lesson.term.min_to_instance(ra_break[-1] + 1, new_lesson.term.duration)
             ra_lesson = self.get_range_lesson(lesson.term)
             if ra_lesson:
                 self.lesson_set.remove(ra_lesson)
-            if not self.busy(new_lesson.term):
+            if not self.busy_lesson(new_lesson.term):
                 lesson.term = new_lesson.term
     
 
@@ -147,16 +147,16 @@ class Timetable2:
 
 
     def get_range_break(self, term):
-        start_time = term.min_from_start
-        end_time = term.endTime().min_from_start
+        start_time = term.min_from_start + 1
+        end_time = term.endTime().min_from_start - 1
         for t in self.break_set:
             if start_time in t or end_time in t:
                 return t
         return None
 
     def get_range_lesson(self, term):
-        start_time = term.min_from_start
-        end_time = term.endTime().min_from_start
+        start_time = term.min_from_start + 1
+        end_time = term.endTime().min_from_start - 1
         for t in self.lesson_set:
             if start_time in t or end_time in t:
                 return t
@@ -167,19 +167,25 @@ class Timetable2:
 
 if __name__ == "__main__":
     t1 = Teacher("Stanislaw", "Polak")
-    l1 = Lesson(Term(15, 00, day=Day.WED),"pp", 2, t1)
-    # l2 = Lesson(Term(17, 00, day=Day.WED),"aa", 2, t1)
-    # l3 = Lesson(Term(12, 00, day=Day.SUN),"bb", 2, t1)
-    # l4 = Lesson(Term(18, 30, day=Day.THU),"cc", 2, t1)
-    # b1 = Break(Term(9, 30, duration=15))
-    # b2 = Break(Term(11, 15, duration=15))
-    # b3 = Break(Term(12, 15, duration=15))
-    # b4 = Break(Term(13, 17, duration=15))
-    b5 = Break(Term(16, 30, duration=15))
-    b_list = [b5]
+    l1 = Lesson(Term(8, 00, day=Day.MON),"pp", 2, t1)
+    b1 = Break(Term(9, 30, duration=15))
+    b2 = Break(Term(11, 15, duration=15))
+    b_list = [b1, b2]
     table = Timetable2(b_list)
+    Timetable2.skip_break = True
     table.put(l1)
 
+    print(l1)
+    table.later_term(l1)
+    print(l1.term)
 
     table.later_term(l1)
-    print(l1)
+    print(l1.term)
+    
+    table.earlier_term(l1)
+    print(l1.term)
+    
+    table.earlier_term(l1)
+    print(l1.term)
+
+    
