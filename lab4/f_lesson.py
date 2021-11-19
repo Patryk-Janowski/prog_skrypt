@@ -43,7 +43,7 @@ class Lesson:
         self.__name = name
         self.__year = year
         self.__teacher = teacher
-        self.__teacher_name = f'{teacher.first_name} {teacher.second_name}''
+        self.__teacher_name = f'{teacher.first_name} {teacher.second_name}'
 
         self.__full_time = self.term.is_full_time()
         self.__part_time = self.term.is_part_time()
