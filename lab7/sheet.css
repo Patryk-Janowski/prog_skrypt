@@ -54,7 +54,7 @@ footer {
 }
 
 .animation{
-  animation: anime 5s infinite;
+  animation: anime 2s infinite alternate;
 }
 
 @keyframes anime {
@@ -76,5 +76,4 @@ footer {
 nav ul {
     padding-left: 10%;
 }
-
 }
