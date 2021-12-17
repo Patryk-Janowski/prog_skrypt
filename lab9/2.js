@@ -2,6 +2,9 @@ var SetIntervalTime = Array();
 var SetTimeoutTime = Array();
 var maxLen = 10;
 
+var timeout;
+var interval;
+
 
 function doTimeConsumingCallculationsWithSetInterval() {
 
@@ -9,7 +12,7 @@ function doTimeConsumingCallculationsWithSetInterval() {
     if (SetIntervalTime.length > maxLen) {
         SetIntervalTime.shift();
     }
-    calculatePrimes(1000, 10000000);
+    calculatePrimes(1000, 100000000);
 }
 
 function doTimeConsumingCallculationsWithSetTimeout() {
@@ -18,7 +21,7 @@ function doTimeConsumingCallculationsWithSetTimeout() {
     if (SetTimeoutTime.length > maxLen) {
         SetTimeoutTime.shift();
     }
-    calculatePrimes(1000, 10000000);
+    calculatePrimes(1000, 100000000);
     window.setTimeout(doTimeConsumingCallculationsWithSetTimeout, document.getElementById('M').value);
 }
 
@@ -64,13 +67,15 @@ function drawChart() {
 
 function start() {
     var M = document.getElementById('M').value;
-    window.setInterval(doTimeConsumingCallculationsWithSetInterval, M);
-    window.setTimeout(doTimeConsumingCallculationsWithSetTimeout, M);
+    interval = window.setInterval(doTimeConsumingCallculationsWithSetInterval, M);
+    timeout = window.setTimeout(doTimeConsumingCallculationsWithSetTimeout, M);
     window.requestAnimationFrame(drawChart);
 }
 
 function stop() {
-    window.location.reload()
+    clearInterval(interval);
+    clearTimeout(timeout);
+    window.location.reload();
     return;
 }
 

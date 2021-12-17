@@ -12,5 +12,5 @@ function decrement_util() {
 }
 
 function decrement() {
-  setInterval(decrement, 1000);
+  setInterval(decrement_util, 1000);
 }
