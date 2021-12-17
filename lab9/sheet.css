@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+font-size: 2vw;
+}
+
+.azure {
+    background-color: azure;
+}
+
+.border {
+    border: 2px black solid;
+    box-shadow: 0 0 1em;
+}
+
+header {
+    margin: 1%;
+    padding: 1%;
+}
+
+aside {
+    float: right;
+    width: 40%;
+    margin: 1%;
+    padding: 1%;
+}
+
+aside ul {
+   padding-left: 10%;
+}
+
+main {
+    margin: 1%;
+    margin-top: 10%;
+    padding: 1%;
+    text-align: left;
+    width: 40%;
+}
+
+nav ul {
+    margin: 1%;
+    padding: 1%;
+    float: left;
+    padding-left: 10%;
+}
+
+
+footer {
+    margin: 1%;
+    padding: 1%;
+}
+
+.animation{
+  animation: anime 2s infinite alternate;
+}
+
+@keyframes anime {
+  from {color: red;}
+  to {color: blue;}
+}
+
+
+/* komputery i tablety */  
+@media screen and (max-width: 640px){
+
+.azure {
+    margin: 1%;
+    padding: 1%;
+    float: none;
+    width: 95%;
+}
+
+nav ul {
+    padding-left: 10%;
+}
+}
