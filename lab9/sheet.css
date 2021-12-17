@@ -4,7 +4,7 @@
 }
 
 body {
-font-size: 2vw;
+    font-size: 2vw;
 }
 
 .azure {
@@ -29,7 +29,7 @@ aside {
 }
 
 aside ul {
-   padding-left: 10%;
+    padding-left: 10%;
 }
 
 main {
@@ -53,27 +53,32 @@ footer {
     padding: 1%;
 }
 
-.animation{
-  animation: anime 2s infinite alternate;
+.animation {
+    animation: anime 2s infinite alternate;
 }
 
 @keyframes anime {
-  from {color: red;}
-  to {color: blue;}
+    from {
+        color: red;
+    }
+
+    to {
+        color: blue;
+    }
 }
 
 
-/* komputery i tablety */  
-@media screen and (max-width: 640px){
+/* komputery i tablety */
+@media screen and (max-width: 640px) {
 
-.azure {
-    margin: 1%;
-    padding: 1%;
-    float: none;
-    width: 95%;
-}
+    .azure {
+        margin: 1%;
+        padding: 1%;
+        float: none;
+        width: 95%;
+    }
 
-nav ul {
-    padding-left: 10%;
-}
+    nav ul {
+        padding-left: 10%;
+    }
 }

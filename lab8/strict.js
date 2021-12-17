@@ -5,7 +5,7 @@ var sum_all = 0;
 
 function sumDigits(str) {
     var sum = 0;
-    if (str && str.match(/\d/g)){
+    if (str && str.match(/\d/g)) {
         var numbers = str.match(/\d{1}/g).map(Number);
         for (var i = 0; i < numbers.length; i++) {
             sum += numbers[i]
@@ -15,8 +15,8 @@ function sumDigits(str) {
 }
 
 function numLetters(str) {
-    if (str && str.match(/[a-zA-Z]/g)){
-    return Number(str.match(/[a-zA-Z]/g).length);
+    if (str && str.match(/[a-zA-Z]/g)) {
+        return Number(str.match(/[a-zA-Z]/g).length);
     } else {
         return 0
     }
@@ -24,7 +24,7 @@ function numLetters(str) {
 
 function sumAll(str) {
     var sum = 0;
-    if (str && str[0].match(/\d/g)){
+    if (str && str[0].match(/\d/g)) {
         var numbers = str.match(/\d+/g).map(Number);
         for (var i = 0; i < numbers.length; i++) {
             sum += numbers[i]
@@ -34,11 +34,10 @@ function sumAll(str) {
     return sum_all
 }
 
-function run(event){
+function run(event) {
     var res = window.prompt("Enter str:");
-    while(res){
+    while (res) {
         console.log(`${sumDigits(res)}\t${numLetters(res)}\t${sumAll(res)}`);
         var res = window.prompt("Enter str:");
     }
 }
-
